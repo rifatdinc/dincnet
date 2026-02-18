@@ -1,5 +1,6 @@
 import Image from "next/image"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
+import type { HttpTypes } from "@medusajs/types"
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -18,7 +19,13 @@ const browseCategories = [
   { name: { tr: "Gömlek", en: "Shirt" }, handle: "shirt" },
 ]
 
-export const HomeFeaturesCategories = ({ locale }: { locale: string }) => {
+export const HomeFeaturesCategories = ({
+  locale,
+  categories = []
+}: {
+  locale: string
+  categories?: HttpTypes.StoreProductCategory[]
+}) => {
   const isTurkish = locale === "tr"
 
   const localizedServiceHighlights = [
@@ -43,6 +50,32 @@ export const HomeFeaturesCategories = ({ locale }: { locale: string }) => {
       icon: HeadphoneIcon,
     },
   ]
+
+  // Helper to resolve image
+  const getCategoryImage = (handle: string) => {
+    const knownHandles = ["sneakers", "sandals", "boots", "sport", "accessories", "shirt"]
+    // If exact match
+    if (knownHandles.includes(handle)) {
+      return `/images/categories/${handle}.png`
+    }
+    // Simple heuristic or random fallback from known ones to make it look diverse
+    // using hash of string to pick a deterministic image
+    const index = handle.length % knownHandles.length
+    return `/images/categories/${knownHandles[index]}.png`
+  }
+
+  // Determine which categories to show
+  // If dynamic categories are passed, use them. Otherwise fallback to hardcoded list.
+  const hasDynamicCategories = categories.length > 0
+
+  const categoriesToDisplay = hasDynamicCategories
+    ? categories.slice(0, 6)
+    : browseCategories.map(c => ({
+        id: c.handle,
+        handle: c.handle,
+        name: c.name[isTurkish ? "tr" : "en"],
+        description: ""
+      }))
 
   return (
     <section className="w-full px-4 lg:px-8 py-6 lg:py-8">
@@ -88,7 +121,7 @@ export const HomeFeaturesCategories = ({ locale }: { locale: string }) => {
         </div>
 
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6 lg:gap-6">
-          {browseCategories.map((category) => (
+          {categoriesToDisplay.map((category) => (
             <LocalizedClientLink
               key={category.handle}
               href={`/categories/${category.handle}`}
@@ -96,15 +129,15 @@ export const HomeFeaturesCategories = ({ locale }: { locale: string }) => {
             >
               <span className="flex h-[120px] w-[120px] items-center justify-center rounded-full bg-component-secondary transition-colors group-hover:bg-component-hover lg:h-[138px] lg:w-[138px]">
                 <Image
-                  src={`/images/categories/${category.handle}.png`}
-                  alt={category.name[isTurkish ? "tr" : "en"]}
+                  src={getCategoryImage(category.handle)}
+                  alt={category.name}
                   width={84}
                   height={84}
                   className="h-[84px] w-[84px] object-contain lg:h-[94px] lg:w-[94px]"
                 />
               </span>
-              <span className="mt-3 text-center text-xl font-semibold leading-tight lg:text-2xl">
-                {category.name[isTurkish ? "tr" : "en"]}
+              <span className="mt-3 text-center text-xl font-semibold leading-tight lg:text-2xl line-clamp-1 break-all px-2">
+                {category.name}
               </span>
             </LocalizedClientLink>
           ))}
