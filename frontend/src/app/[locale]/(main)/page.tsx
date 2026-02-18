@@ -176,7 +176,7 @@ export default async function Home({
 
       <HomeShowcase locale={locale} products={featuredProducts} />
       <HomeFeaturesCategories locale={locale} categories={categories} />
-      <div className="px-4 lg:px-8 w-full">
+      <div className="container w-full">
         <HomeProductSection
           heading={locale === "tr" ? "Yeni Gelenler" : "New Arrivals"}
           locale={locale}

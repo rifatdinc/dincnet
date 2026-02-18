@@ -20,6 +20,9 @@ export const CustomCarousel = ({
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align,
+    breakpoints: {
+      "(min-width: 1024px)": { align: "start" },
+    },
   })
 
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -51,13 +54,37 @@ export const CustomCarousel = ({
   }
 
   return (
-    <div className="embla relative w-full flex justify-center">
+    <div className="embla relative w-full flex justify-center group">
       <div
-        className="embla__viewport overflow-hidden rounded-xs w-full xl:flex xl:justify-center"
+        className="embla__viewport overflow-hidden w-full"
         ref={emblaRef}
       >
-        <div className="embla__container flex">
-          {items.map((slide) => slide)}
+        <div className="embla__container flex -ml-4">
+          {items.map((slide, index) => (
+            <div
+              key={index}
+              className="embla__slide pl-4 min-w-0 flex-[0_0_80%] sm:flex-[0_0_50%] md:flex-[0_0_40%] lg:flex-[0_0_25%]"
+            >
+              {slide}
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden lg:block">
+          <button
+            onClick={() => changeSlideHandler(selectedIndex - 1)}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
+            disabled={selectedIndex === 0}
+          >
+            <ArrowLeftIcon color={arrowColor[variant]} />
+          </button>
+          <button
+            onClick={() => changeSlideHandler(selectedIndex + 1)}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
+            disabled={selectedIndex === items.length - 1}
+          >
+            <ArrowRightIcon color={arrowColor[variant]} />
+          </button>
         </div>
 
         <div className="flex justify-between items-center mt-4 sm:hidden">

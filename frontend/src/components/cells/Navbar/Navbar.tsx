@@ -32,7 +32,7 @@ export const Navbar = ({
   return (
     <div className="w-full border-b" data-testid="navbar">
       <div className="hidden lg:block border-b">
-        <div className="flex items-center gap-3 py-3 lg:py-4 px-4 lg:px-8">
+        <div className="container flex items-center gap-3 py-3 lg:py-4">
           <LocalizedClientLink href="/" className="shrink-0 w-[120px] xl:w-[160px]" data-testid="header-logo-link-desktop">
             <Image
               src="/branding/dincnet-wordmark.svg"
@@ -78,30 +78,32 @@ export const Navbar = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-between px-4 lg:px-8 py-3 lg:py-4 border-t">
-          <nav className="flex items-center gap-8" aria-label="Main links">
-            {desktopLinks.map((link) => (
-              <LocalizedClientLink
-                key={link.label}
-                href={link.href}
-                className="text-xl xl:text-2xl font-semibold leading-none"
-              >
-                {link.label}
-                {((isTurkish && (link.label === "Sayfalar" || link.label === "Bloglar")) ||
-                  (!isTurkish && (link.label === "Pages" || link.label === "Blogs"))) && (
-                  <CollapseIcon size={16} className="inline-block ml-2 rotate-180 align-middle" />
-                )}
-              </LocalizedClientLink>
-            ))}
-          </nav>
+        <div className="border-t">
+          <div className="container flex items-center justify-between py-3 lg:py-4">
+            <nav className="flex items-center gap-8" aria-label="Main links">
+              {desktopLinks.map((link) => (
+                <LocalizedClientLink
+                  key={link.label}
+                  href={link.href}
+                  className="text-xl xl:text-2xl font-semibold leading-none"
+                >
+                  {link.label}
+                  {((isTurkish && (link.label === "Sayfalar" || link.label === "Bloglar")) ||
+                    (!isTurkish && (link.label === "Pages" || link.label === "Blogs"))) && (
+                      <CollapseIcon size={16} className="inline-block ml-2 rotate-180 align-middle" />
+                    )}
+                </LocalizedClientLink>
+              ))}
+            </nav>
 
-          <div className="flex items-center gap-4">
-            <span className="text-xl xl:text-2xl font-semibold leading-none">
-              {isTurkish ? "Çok Satanlar" : "Best Selling"}
-            </span>
-            <Badge className="h-7 rounded-full px-3 text-xs uppercase">
-              {isTurkish ? "İndirim" : "Sale"}
-            </Badge>
+            <div className="flex items-center gap-4">
+              <span className="text-xl xl:text-2xl font-semibold leading-none">
+                {isTurkish ? "Çok Satanlar" : "Best Selling"}
+              </span>
+              <Badge className="h-7 rounded-full px-3 text-xs uppercase">
+                {isTurkish ? "İndirim" : "Sale"}
+              </Badge>
+            </div>
           </div>
         </div>
       </div>
