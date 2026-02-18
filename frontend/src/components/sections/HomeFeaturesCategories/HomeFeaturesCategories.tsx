@@ -78,7 +78,7 @@ export const HomeFeaturesCategories = ({
       }))
 
   return (
-    <section className="w-full px-4 lg:px-8 py-6 lg:py-8">
+    <section className="container py-6 lg:py-8">
       <div className="grid grid-cols-2 gap-4 border-b border-secondary/30 pb-6 lg:grid-cols-4 lg:gap-6 lg:pb-8">
         {localizedServiceHighlights.map((item) => {
           const Icon = item.icon

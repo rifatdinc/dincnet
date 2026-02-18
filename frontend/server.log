@@ -1,0 +1,18 @@
+
+> b2c-storefront@1.5.1 start /app/frontend
+> next start
+
+   ▲ Next.js 15.5.9
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+ ✓ Ready in 1015ms
+Error: Middleware.ts: Error fetching regions. Did you set up regions in your Medusa Admin and define a MEDUSA_BACKEND_URL environment variable? Note that the variable is no longer named NEXT_PUBLIC_MEDUSA_BACKEND_URL.
+    at bJ (.next/server/src/middleware.js:13:44135)
+    at bL (.next/server/src/middleware.js:13:45795)
+    at handler (.next/server/src/middleware.js:13:46511)
+    at <unknown> (.next/server/src/middleware.js:13:36822)
+    at <unknown> (.next/server/src/middleware.js:13:36809)
+    at async bf (.next/server/src/middleware.js:13:33177)
